@@ -53,6 +53,5 @@ exports.up = async function(knex) {
         await knex.schema.dropTableIfExists("resources")
         await knex.schema.dropTableIfExists("tasks")
         await knex.schema.dropTableIfExists("projects")
-    
     };
     
