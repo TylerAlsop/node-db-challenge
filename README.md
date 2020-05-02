@@ -40,7 +40,7 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
-  A relational database is software that stores data in tables that relate to one another. SQL is used to manage and query that data.
+  A relational database is software that stores data in tables that relate to one another. SQL is a language used to manage and query that data.
 
 - [ ] Why do tables need a `primary key`?
 
