@@ -40,11 +40,20 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 - [ ] Explain the difference between `Relational Databases` and `SQL`.
 
+  A relational database is software that stores data in tables that relate to one another. SQL is used to manage and query that data.
+
 - [ ] Why do tables need a `primary key`?
 
-- [ ] What is the name given to a table column that references the primary key on another table.
+  A primary key ensures that each row is unique and can therefore be accessed easily.
+
+- [ ] What is the name given to a table column that references the primary key on another table?
+
+  A foriegn key.
 
 - [ ] What do we need in order to have a _many to many_ relationship between two tables.
+
+  We need many bits of data in one table that relate to many other bits of data in another table.
+  i.e. From the lecture a few nights ago. There are many zoos. Each zoo can have many types of animals, and each animal type can be in many zoos.
 
 ## Minimum Viable Product
 
