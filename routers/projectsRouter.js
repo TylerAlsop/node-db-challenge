@@ -36,24 +36,41 @@ router.get("/:id", async (req, res, next) => {
 	}
 })
 
+/////////////// POST ///////////////
 
-
-router.get("/:id/animals", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
 	try {
-		const animals = await db("zoos_animals as za")
-			.join("zoos as z", "z.id", "za.zoo_id")
-			.join("animals as a", "a.id", "za.animal_id")
-			.join("species as s", "s.id", "a.species_id")
-			.where("za.zoo_id", req.params.id)
+		const projectData = req.body
+		await db("projects").insert(projectData)
+
+		res.status(201).json(projectData)
+	} catch(err) {
+		next(err)
+	}
+})
+
+
+
+
+/////////////// PROJECT TASKS CRUD OPERATIONS ///////////////
+
+
+router.get("/:id/tasks", async (req, res, next) => {
+	try {
+		const tasks = await db("projects as p")
+			.join("tasks as t", "t.id", "p.id")
+			.where("p.id", req.params.id)
 			.select(
-				"a.id",
-				"a.name",
-				"s.name as species",
-				"za.from_date as arrived_on",
-				"za.to_date as left_on"
+                "p.name as project_name",
+                "p.description as project_description",
+				"t.id as task_id",
+				"t.name as task_name",
+				"t.description as task_description",
+                "t.notes as task_notes",
+                "t.completed as task_completed"
 			)
 
-		res.json(animals)
+		res.json(tasks)
 
 	} catch(err) {
 		next(err)
