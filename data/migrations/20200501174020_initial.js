@@ -13,6 +13,12 @@ exports.up = async function(knex) {
     
         await knex.schema.createTable("tasks", (table) => {
             table.increments("id")
+            table.integer("project_id")
+                .references("id")
+                .inTable("projects")
+                .notNullable()
+                .onDelete("CASCADE")
+                .onUpdate("CASCADE")
             table.text("name").notNullable()
             table.text("description").notNullable()
             table.text("notes").nullable()

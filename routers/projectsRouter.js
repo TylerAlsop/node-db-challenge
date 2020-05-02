@@ -54,6 +54,7 @@ router.post("/", async (req, res, next) => {
 
 /////////////// PROJECT TASKS CRUD OPERATIONS ///////////////
 
+/////////////// GET tasks ///////////////
 
 router.get("/:id/tasks", async (req, res, next) => {
 	try {
@@ -72,6 +73,28 @@ router.get("/:id/tasks", async (req, res, next) => {
 
 		res.json(tasks)
 
+	} catch(err) {
+		next(err)
+	}
+})
+
+//************** */ Having issues with POST tasks//***************//
+
+/////////////// POST tasks ///////////////
+
+router.post("/:id/tasks", async (req, res, next) => {
+	try {
+        const taskData = req.body
+        // const { project_id } = req.params
+        // {...taskData, project_id: project_id}
+
+        await db("tasks as t")
+        .join("projects as p", "p.id", "t.project_id")
+        .insert(taskData)
+
+        
+
+		res.status(201).json(taskData)
 	} catch(err) {
 		next(err)
 	}
