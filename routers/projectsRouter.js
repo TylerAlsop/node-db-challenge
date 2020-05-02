@@ -58,9 +58,10 @@ router.post("/", async (req, res, next) => {
 
 router.get("/:id/tasks", async (req, res, next) => {
 	try {
+        const { id } = req.params
 		const tasks = await db("projects as p")
-			.join("tasks as t", "t.id", "p.id")
-			.where("p.id", req.params.id)
+			.join("tasks as t", "p.id", "t.project_id")
+			.where("project_id", id)
 			.select(
                 "p.name as project_name",
                 "p.description as project_description",
@@ -69,7 +70,8 @@ router.get("/:id/tasks", async (req, res, next) => {
 				"t.description as task_description",
                 "t.notes as task_notes",
                 "t.completed as task_completed"
-			)
+            )
+            .orderBy("t.id")
 
 		res.json(tasks)
 
