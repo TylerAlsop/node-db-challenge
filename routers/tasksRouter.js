@@ -3,60 +3,11 @@ const db = require("../data/config")
 
 const router = express.Router()
 
-/////// This file handles the route http://localhost:5555/projects  ///////
-
-
-/////////////// GET ///////////////
-
-router.get("/", async (req, res, next) => {
-	try {
-		res.json(await db("projects"))
-	} catch(err) {
-		next(err)
-	}
-})
-
-/////// GET by id ///////
-
-router.get("/:id", async (req, res, next) => {
-	try {
-		const project = await db("projects")
-			.where("id", req.params.id)
-			.first()
-		
-		if (!project) {
-			return res.status(404).json({
-				message: "Project not found",
-			})
-		}
-
-		res.json(project)
-	} catch(err) {
-		next(err)
-	}
-})
-
-/////////////// POST ///////////////
-
-router.post("/", async (req, res, next) => {
-	try {
-		const projectData = req.body
-		await db("projects").insert(projectData)
-
-		res.status(201).json(projectData)
-	} catch(err) {
-		next(err)
-	}
-})
-
-
-
-
 /////////////// PROJECT TASKS CRUD OPERATIONS ///////////////
 
 /////////////// GET tasks ///////////////
 
-router.get("/:id/tasks", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
 	try {
         const { id } = req.params
 		const tasks = await db("projects as p")
@@ -80,16 +31,17 @@ router.get("/:id/tasks", async (req, res, next) => {
 	}
 })
 
-
 /////////////// POST tasks ///////////////
 
-router.post("/:id/tasks", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
 	try {
         const taskData = req.body
+        // const { project_id } = req.params
+        // {...taskData, project_id: project_id}
 
         await db("tasks as t")
         .join("projects as p", "p.id", "t.project_id")
-        .insert({...taskData, project_id: req.params.id})
+        .insert({...taskData, project_id: req.params})
 
         
 
@@ -101,15 +53,14 @@ router.post("/:id/tasks", async (req, res, next) => {
 
 /////////////// DELETE tasks ///////////////
 
-router.delete("/:id/tasks/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
         const { id } = req.params
-        await db ("tasks").where({ id }).del()
-        res.status(204).end()
+        await db("tasks").where({ id }).del()
+
     } catch (err) {
         next(err)
     }
 })
-
 
 module.exports = router

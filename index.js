@@ -12,6 +12,8 @@ server.use(express.json())
 server.use("/projects", projectsRouter)
 server.use("/resources", resourcesRouter)
 
+
+
 server.use((err, req, res, next) => {
 	console.log(err)
 	res.status(500).json({
