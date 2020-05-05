@@ -16,6 +16,23 @@ router.get("/", async (req, res, next) => {
 	}
 })
 
+// router.get("/", async (req, res, next) => {
+// 	try {
+//         const projects = await db("projects_resources as pr")
+//         .join("projects as p", "p.id", "pr.project_id")
+//         .join("resources as r", "r.id", "pr.resources_id")
+//         .select(
+//             "p.*",
+//             "r.*"
+//         )
+
+//         res.json(projects)
+        
+// 	} catch(err) {
+// 		next(err)
+// 	}
+// })
+
 /////// GET by id ///////
 
 router.get("/:id", async (req, res, next) => {
